@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yyn.bigwork.dao.OrderDao">
+
+    <resultMap id="order_class" type="cn.yyn.bigwork.bean.Order">
+        <id column="order_id" property="orderId"/>
+        <result column="commodity_id" property="commodityId"/>
+        <result column="commodity_number" property="commodityNumber"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user_id" property="updateUserId"/>
+        <!--创建者信息封装-->
+        <association property="createUser" javaType="cn.yyn.bigwork.bean.UserInfo">
+            <id column="create_user_id" property="userId"/>
+            <result column="username" property="username"/>
+            <result column="password" property="password"/>
+            <result column="true_name" property="trueName"/>
+            <result column="email" property="email"/>
+            <result column="phone" property="phone"/>
+            <result column="message" property="message"/>
+            <result column="country" property="country"/>
+            <result column="gender" property="gender"/>
+            <result column="birthday" property="birthday"/>
+            <result column="create_time" property="createTime"/>
+            <result column="role_id" property="roleId"/>
+            <association property="role"  javaType="cn.yyn.bigwork.bean.Role">
+                <id column="role_id" property="roleId"/>
+                <result column="role_name" property="roleName"/>
+                <result column="comment" property="comment"/>
+            </association>
+        </association>
+        <!--修改者信息封装-->
+        <association property="updateUser" javaType="cn.yyn.bigwork.bean.UserInfo">
+            <id column="update_user_id" property="userId"/>
+            <result column="username" property="username"/>
+            <result column="password" property="password"/>
+            <result column="true_name" property="trueName"/>
+            <result column="email" property="email"/>
+            <result column="phone" property="phone"/>
+            <result column="message" property="message"/>
+            <result column="country" property="country"/>
+            <result column="gender" property="gender"/>
+            <result column="birthday" property="birthday"/>
+            <result column="create_time" property="createTime"/>
+            <result column="role_id" property="roleId"/>
+            <association property="role"  javaType="cn.yyn.bigwork.bean.Role">
+                <id column="role_id" property="roleId"/>
+                <result column="role_name" property="roleName"/>
+                <result column="comment" property="comment"/>
+            </association>
+        </association>
+        <!--商品信息封装-->
+        <association property="commodity" javaType="cn.yyn.bigwork.bean.Commodity">
+            <id column="commodity_id" property="commodityId"/>
+            <result column="commodity_name" property="commodityName"/>
+            <result column="price" property="price"/>
+            <result column="create_time" property="createTime"/>
+            <result column="supplier_id" property="supplierId"/>
+            <!--供应商信息封装-->
+            <association property="supplier" javaType="cn.yyn.bigwork.bean.Supplier">
+                <id column="supplier_id" property="supplierId"/>
+                <result column="supplier_name" property="supplierName"/>
+                <result column="supplier_address" property="supplierAddress"/>
+                <result column="supplier_country" property="supplierCountry"/>
+                <result column="supplier_ceo" property="supplierCEO"/>
+                <result column="create_time" property="createTime"/>
+            </association>
+        </association>
+    </resultMap>
+
+    <select id="findAllOrder" resultMap="order_class">
+            SELECT a.*,b.*,c.*,d.*,e.*,f.*,g.*
+            FROM order_table a,order_user b,order_user c,order_commodity d,order_supplier e,order_role f,order_role g
+            WHERE a.create_user_id=b.user_id
+            AND a.update_user_id=c.user_id
+            AND a.commodity_id=d.commodity_id
+            AND d.supplier_id=e.supplier_id
+            AND b.role_id=f.role_id
+            AND c.role_id=g.role_id
+            order by order_id
+    </select>
+
+
+
+</mapper>

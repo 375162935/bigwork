@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yyn.bigwork.dao.CommodityDao">
+
+    <resultMap id="commodity_supplier" type="cn.yyn.bigwork.bean.Commodity">
+        <id column="commodity_id" property="commodityId"/>
+        <result column="commodity_name" property="commodityName"/>
+        <result column="price" property="price"/>
+        <result column="create_time" property="createTime"/>
+        <result column="supplier_id" property="supplierId"/>
+        <association property="supplier"  javaType="cn.yyn.bigwork.bean.Supplier">
+            <id column="supplier_id" property="supplierId"/>
+            <result column="supplier_name" property="supplierName"/>
+            <result column="supplier_address" property="supplierAddress"/>
+            <result column="supplier_country" property="supplierCountry"/>
+            <result column="supplier_ceo" property="supplierCEO"/>
+            <result column="create_time" property="createTime"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllCommodity" resultMap="commodity_supplier">
+        select a.*,b.*
+        from order_commodity a,order_supplier b
+        where a.supplier_id=b.supplier_id
+        order by commodity_id
+    </select>
+
+    <select id="findCommodityById" parameterType="Integer" resultMap="commodity_supplier">
+        select a.*,b.*
+        from order_commodity a,order_supplier b
+        where a.supplier_id=b.supplier_id
+        and a.commodity_id=#{commodityId}
+        order by commodity_id
+    </select>
+
+    <insert id="addCommodity" parameterType="cn.yyn.bigwork.bean.Commodity" >
+        INSERT INTO order_commodity(commodity_name,price,create_time,supplier_id)
+        VALUE(#{commodityName},#{price},#{createTime},#{supplierId})
+    </insert>
+
+    <update id="updCommodity" parameterType="cn.yyn.bigwork.bean.Commodity">
+        update order_commodity
+        set commodity_name=#{commodityName},price=#{price},
+        create_time=#{createTime},supplier_id=#{supplierId}
+        where commodity_id=#{commodityId}
+    </update>
+
+    <delete id="delCommodity" parameterType="Integer">
+        delete from order_commodity where commodity_id=#{commodityId}
+    </delete>
+
+</mapper>

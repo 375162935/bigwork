@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yyn.bigwork.dao.UserInfoDao">
+
+    <resultMap id="user_role" type="cn.yyn.bigwork.bean.UserInfo">
+        <id column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="true_name" property="trueName"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="message" property="message"/>
+        <result column="country" property="country"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="create_time" property="createTime"/>
+        <association property="role"  javaType="cn.yyn.bigwork.bean.Role">
+            <id column="role_id" property="roleId"/>
+            <result column="role_name" property="roleName"/>
+            <result column="comment" property="comment"/>
+        </association>
+    </resultMap>
+
+    <select id="findUserByUserName" parameterType="String" resultMap="user_role">
+        select a.*,b.*
+        from order_user a,order_role b
+        where username=#{username}
+        and a.role_id=b.role_id
+        order by user_id
+    </select>
+
+    <insert id="addUserInfo" parameterType="cn.yyn.bigwork.bean.UserInfo" >
+        INSERT INTO order_user(username,password,turename,phone,gender,birthday,create_time)
+        VALUE(#{username},#{password},#{trueName},#{phone},#{gender},#{birthday},#{createTime})
+    </insert>
+
+    <update id="updUserInfo" parameterType="cn.yyn.bigwork.bean.UserInfo">
+        update order_user
+        set true_name=#{trueName},email=#{email},
+        phone=#{phone},password=#{password},
+        message=#{message},country=#{country}
+        where user_id=#{userId}
+    </update>
+
+</mapper>

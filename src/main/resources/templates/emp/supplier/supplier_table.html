@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <title>供应商管理</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+          th:href="@{/plugins/bootstrap/css/bootstrap.min.css}">
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet"
+          th:href="@{/css/style.css}">
+    <!-- You can change the theme colors from here -->
+    <link href="/css/colors/blue.css" id="theme" rel="stylesheet"
+          th:href="@{/css/colors/blue.css}">
+
+    <style>
+        th {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        td a {
+            color: #67757c;
+        }
+
+        .page-bar {
+            padding: 0;
+            margin: 0 50px;
+        }
+
+        .page-bar li {
+            display: inline-block;
+            height: 25px;
+            width: 60px;
+            font-size: 15px;
+            text-align: center;
+            border-radius: 5px;
+            margin: 20px auto;
+        }
+
+        .page-bar li:hover {
+            background-color: #ddd;
+        }
+
+        .page-bar li a {
+            display: inline-block;
+            height: 25px;
+            width: 60px;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .card {
+            height: 470px;
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="fix-header fix-sidebar card-no-border">
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+    </svg>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!--顶部信息栏-->
+    <!-- ============================================================== -->
+    <div th:replace="common/header :: header"></div>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!--侧边导航栏-->
+    <!-- ============================================================== -->
+    <div th:replace="common/sidebar :: aside"></div>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!--页面title栏-->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <div class="col-md-5 col-8 align-self-center">
+                    <h3 class="text-themecolor m-b-0 m-t-0">供应商管理</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/main.html"
+                                                       th:href="@{/main.html}">首页</a></li>
+                        <li class="breadcrumb-item active">供应商管理</li>
+                    </ol>
+                </div>
+                <div class="col-md-7 col-4 align-self-center">
+                    <a href="/supplier_add.html" th:href="@{/supplier_add.html}"
+                       class="btn waves-effect waves-light btn-danger pull-right hidden-sm-down">添加供应商</a>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <!-- column -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+<!--                                        <th>供应商ID</th>-->
+                                        <th>供应商名称</th>
+                                        <th>供应商地址</th>
+                                        <th>供应商国家</th>
+                                        <th>供应商老板</th>
+                                        <th>供应商创建时间</th>
+                                        <th colspan="3" style="text-align: center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="supplier : ${pageInfo.list}">
+<!--                                        <td th:text="${supplier.supplierId}">供应商ID</td>-->
+                                        <td th:text="${supplier.supplierName}">供应商名称</td>
+                                        <td th:text="${supplier.supplierAddress}">供应商地址</td>
+                                        <td th:text="${supplier.supplierCountry}">供应商国家</td>
+                                        <td th:text="${supplier.supplierCEO}">供应商老板</td>
+                                        <td th:text="${#dates.format(supplier.createTime, 'yyyy-MM-dd ')}">供应商创建时间</td>
+                                        <td><a href="" th:href="@{/supplier/supplier_upd_pages(supplierId=${supplier.supplierId})}">编辑</a></td>
+                                        <td><a href="" th:href="@{/supplier/supplier_del(supplierId=${supplier.supplierId})}">删除</a></td>
+<!--                                        <td><a href="">详情</a></td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <ul class="page-bar">
+                            <li><a href="#" th:href="@{/supplier/supplier_table(page=1,size=6)}">首页</a></li>
+                            <li><a href="#"
+                                   th:href="@{/supplier/supplier_table(page=${pageInfo.pageNum !=1}?${pageInfo.pageNum -1}:1,size=6)}">上一页</a>
+                            </li>
+                            <li th:each="pageNums :${#numbers.sequence(1,pageInfo.pages)}">
+                                <a href="#" th:href="@{/supplier/supplier_table(page=${pageNums},size=6)}"
+                                   th:text="${pageNums}"
+                                   th:style="${pageNums==pageInfo.pageNum}?'background-color:#8ea8f5;border-radius: 5px;':''">1</a>
+                            </li>
+                            <li><a href="#"
+                                   th:href="@{/supplier/supplier_table(page=${pageInfo.pageNum !=pageInfo.pages}?${pageInfo.pageNum +1}:${pageInfo.pages},size=6)}">下一页</a>
+                            </li>
+                            <li><a href="#" th:href="@{/supplier/supplier_table(page=${pageInfo.pages},size=6)}">尾页</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+<!--        <footer class="footer">-->
+<!--            Copyright &copy; 2019.Company name All rights reserved.<a target="_blank"-->
+<!--                                                                      href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>-->
+<!--        </footer>-->
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="/plugins/jquery/jquery.min.js" th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/plugins/bootstrap/js/tether.min.js" th:src="@{/plugins/bootstrap/js/tether.min.js}"></script>
+<script src="/plugins/bootstrap/js/bootstrap.min.js" th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/jquery.slimscroll.js" th:src="@{/js/jquery.slimscroll.js}"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js" th:src="@{/js/waves.js}"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js" th:src="@{/js/sidebarmenu.js}"></script>
+<!--stickey kit -->
+<script src="/plugins/sticky-kit-master/dist/sticky-kit.min.js" th:src="@{/plugins/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js" th:src="@{/js/custom.min.js}"></script>
+</body>
+
+</html>

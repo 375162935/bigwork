@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <title>用户页</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="/css/colors/blue.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="fix-header fix-sidebar card-no-border">
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+    </svg>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div th:replace="common/header :: header"></div>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <div th:replace="common/sidebar :: aside"></div>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <div class="col-md-5 col-8 align-self-center">
+                    <h3 class="text-themecolor m-b-0 m-t-0">个人资料</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/main.html" th:href="@{/main.html}">首页</a></li>
+                        <li class="breadcrumb-item active">个人资料</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <!-- Row -->
+            <div class="row">
+                <!-- Column -->
+                <div class="col-lg-4 col-xlg-3 col-md-5">
+                    <div class="card">
+                        <div class="card-block">
+                            <center class="m-t-30"><img src="/images/users/5.jpg" class="img-circle" width="150"/>
+                                <h4 class="card-title m-t-10" th:text="${userInfo.trueName}">Hanna Gover</h4>
+                                <h6 class="card-subtitle" th:text="${userInfo.role.comment}">Accoubts Manager Amix
+                                    corp</h6>
+                                <!--                                    <div class="row text-center justify-content-md-center">-->
+                                <!--                                        <div class="col-4"><a href="javascript:void(0)" class="link">-->
+                                <!--                                            <i class="icon-people"></i> <font class="font-medium">254</font></a></div>-->
+                                <!--                                        <div class="col-4"><a href="javascript:void(0)" class="link">-->
+                                <!--                                            <i class="icon-picture"></i> <font class="font-medium">54</font></a></div>-->
+                                <!--                                    </div>-->
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <!-- Column -->
+                <div class="col-lg-8 col-xlg-9 col-md-7">
+                    <div class="card">
+                        <div class="card-block">
+                            <form class="form-horizontal form-material updform">
+                                <div class="form-group">
+                                    <label class="col-md-12">姓名</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="Johnathan Doe"
+                                               class="form-control form-control-line" name="trueName"
+                                               th:placeholder="${userInfo.trueName}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12">email</label>
+                                    <div class="col-md-12">
+                                        <input type="email" name="email"
+                                               class="form-control form-control-line"
+                                               id="example-email" placeholder="johnathan@admin.com"
+                                               th:placeholder="${userInfo.email}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">password</label>
+                                    <div class="col-md-12">
+                                        <input type="text" name="password"
+                                               class="form-control form-control-line"
+                                               th:placeholder="${userInfo.password}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Phone</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="123 456 7890" name="phone"
+                                               class="form-control form-control-line"
+                                               th:placeholder="${userInfo.phone}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Message</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="1234567890@xx.com" name="message"
+                                               class="form-control form-control-line"
+                                               th:placeholder="${userInfo.message}">
+                                        <!--<textarea rows="5" class="form-control form-control-line"></textarea>-->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">Select Country</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control form-control-line" name="country" th:placeholder="${userInfo.country}">
+                                            <option value="China"
+                                                    th:selected="${userInfo.country eq 'China'}">中国
+                                            </option>
+                                            <option value="London"
+                                                    th:selected="${userInfo.country eq 'London'}">伦敦
+                                            </option>
+                                            <option value="India"
+                                                    th:selected="${userInfo.country eq 'India'}">印第安
+                                            </option>
+                                            <option value="Usa"
+                                                    th:selected="${userInfo.country eq 'Usa'}">美国
+                                            </option>
+                                            <option value="Canada"
+                                                    th:selected="${userInfo.country eq 'Canada'}">加拿大
+                                            </option>
+                                            <option value="Thailand"
+                                                    th:selected="${userInfo.country eq 'Thailand'}">泰国
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <!--                                        <button class="btn btn-success upd_btn">更新个人信息</button>-->
+                                        <input type="button" class="btn btn-success upd_btn" value="更新个人信息">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+            <!-- Row -->
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <!--        <footer class="footer">-->
+        <!--            Copyright &copy; 2019.Company name All rights reserved.-->
+        <!--            <a target="_blank"-->
+        <!--               href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>-->
+        <!--        </footer>-->
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/plugins/bootstrap/js/tether.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/jquery.slimscroll.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--stickey kit -->
+<script src="/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+</body>
+
+<script>
+    $(function () {
+        var trueName = $("input[name=trueName]");
+        var email = $("input[name=email]");
+        var password = $("input[name=password]");
+        var phone = $("input[name=phone]");
+        var message = $("input[name=message]");
+        var country = $("select[name=country]");
+        //status是true则表示信息未修改，false表示已修改
+        //是否修改的判断条件
+        var flag=trueName_status = email_status = password_status =
+            phone_status = message_status = country_status = true;
+
+        $(".upd_btn").on("click", function () {
+            if (trueName.val() != "" && trueName.val() != trueName.attr("placeholder")) {
+                // console.log(trueName.val())
+                // console.log(trueName.attr("placeholder"))
+                trueName_status = false;
+            }
+            if (email.val() != "" && email.val() != email.attr("placeholder")) {
+                // console.log(email.val())
+                // console.log(email.attr("placeholder"))
+                email_status = false;
+            }
+            if (password.val() != "" && password.val() != password.attr("placeholder")) {
+                // console.log(password.val())
+                // console.log(password.attr("placeholder"))
+                password_status = false;
+            }
+            if (phone.val() != "" && phone.val() != phone.attr("placeholder")) {
+                // console.log(phone.val())
+                // console.log(phone.attr("placeholder"))
+                phone_status = false;
+            }
+            if (message.val() != "" && message.val() != message.attr("placeholder")) {
+                // console.log(message.val())
+                // console.log(message.attr("placeholder"))
+                message_status = false;
+            }
+            if (country.val() != "" && country.val() != country.attr("placeholder")) {
+                // console.log(country.val())
+                // console.log(country.attr("placeholder"))
+                country_status = false;
+            }
+            if (trueName_status && email_status && password_status &&
+                phone_status && message_status && country_status){
+                alert("并未对此信息进行修改")
+            }else{
+                $.ajax({
+                    url:"/user/upd_user",
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        trueName:trueName.val(),
+                        email:email.val(),
+                        password:password.val(),
+                        phone:phone.val(),
+                        message:message.val(),
+                        country:country.val()
+                    },success:function (data) {
+                        if (data.result=="1"){
+                            alert("修改失败")
+                        }else {
+                            window.location.href="/main.html";
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>
+
+</html>

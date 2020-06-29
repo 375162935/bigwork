@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="/css/login-styles.css"
+          th:href="@{/css/login-styles.css}">
+    <script src="/js/jquery-2.1.1.min.js" type="text/javascript"
+            th:src="@{/js/jquery-2.1.1.min.js}"></script>
+    <script src="/js/jquery1.8.1.js" type="text/javascript"
+            th:src="@{/js/jquery1.8.1.js}"></script>
+    <style>
+        .form-div span {
+            width: 80px;
+            display: inline-block;
+        }
+
+        .form-div input {
+            display: inline-block;
+        }
+
+        .error-span {
+            position: absolute;
+            right: 30px;
+            top: 10px;
+            font-size: 13px;
+            display: none;
+            color: red;
+        }
+
+        #code_form {
+            position: static;
+        }
+
+        #v_container {
+            position: absolute;
+            right: -40px;
+            bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="htmleaf-container">
+    <div class="wrapper">
+        <div class="container">
+            <h1 th:href="@{/main.html}">Welcome</h1>
+
+            <form action="" class="form" id="submit-form" method="post">
+                <div class="form-div" style="position: relative" id="username-form">
+                    <span>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</span>
+                    <input type="text" placeholder="请输入您的账号" name="username">
+                </div>
+                <div class="form-div" style="position: relative">
+                    <span>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</span>
+                    <input type="text" placeholder="请输入您的密码" name="password">
+                </div>
+                <div class="form-div" id="code_form" style="position: relative">
+                    <span>验&nbsp;&nbsp;证&nbsp;&nbsp;码:</span>
+                    <input type="text" placeholder="请输入验证码" name="code">
+                    <div id="v_container" style="width: 140px;height: 40px;"></div>
+                </div>
+
+                <button type="button" class="submit" id="login-button">登录</button>
+                <button type="button" onclick="register()">注册</button>
+            </form>
+        </div>
+
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript" src="/js/wer.js"
+        th:src="@{/js/wer.js}"></script>
+
+<script type="text/javascript">
+    function register() {
+        window.location.href = "/register.html";
+    }
+
+    var verifyCode = new GVerify("v_container");
+
+    $(function () {
+        var $username = $("input[name=username]");
+        var $password = $("input[name=password]");
+        var $code = $("input[name=code]");
+        var username_status = true;
+        var password_status = true;
+        $username.blur(function () {
+            $username.next("span").remove();
+            if ($username.val() == "") {
+                $username.after("<span class='error-span'>账号不能为空</span>")
+            } else {
+                username_status = false;
+            }
+        })
+        $password.blur(function () {
+            $password.next("span").remove();
+            if ($password.val() == "") {
+                $password.after("<span class='error-span'>密码不能为空</span>")
+            } else {
+                password_status = false;
+            }
+        })
+        $(".submit").on("click", function (event) {
+            var username = $username.val();
+            var password = $password.val();
+            var code = $code.val();
+            if (username_status) {
+                alert("请输入账号");
+                return;
+            }
+            if (password_status) {
+                alert("请输入密码");
+                return;
+            }
+            // if ($code.val()=="") {
+            //     alert("验证码不能为空")
+            // } else if (!verifyCode.validate(code)) {
+            //     alert("验证码不正确")
+            // }
+            else {
+                $.ajax({
+                    url: "/user/login",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        username: username,
+                        password: password
+                    }, success: function (data) {
+                        if (data.result == "0") {
+                            alert("账号不纯在")
+                        } else if (data.result == "1") {
+                            alert("密码输入错误")
+                        } else {
+                            //登陆动画
+                            event.preventDefault();
+                            $(".form").fadeOut(500);
+                            $(".wrapper").addClass("form-success");
+                            window.setTimeout(function () {
+                                window.location.href = "/main.html";
+                            }, 1000)
+                        }
+                    }, error: function (data) {
+                        console.log(data);
+                        alert(data.result)
+                    }
+                })
+            }
+        })
+    })
+</script>
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';color:#000000">
+    <h1>数据管理系统</h1>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yyn.bigwork.dao.SupplierDao">
+
+    <select id="findAllSupplier" resultType="cn.yyn.bigwork.bean.Supplier">
+        select * from order_supplier order by supplier_id
+    </select>
+
+    <select id="findSupplierById" parameterType="Integer" resultType="cn.yyn.bigwork.bean.Supplier">
+        select * from order_supplier where supplier_id=#{supplierId} order by  supplier_id
+    </select>
+
+    <insert id="addSupplier" parameterType="cn.yyn.bigwork.bean.Supplier">
+        INSERT INTO order_supplier(supplier_name,supplier_address,supplier_country,supplier_ceo,create_time)
+        VALUE(#{supplierName},#{supplierAddress},#{supplierCountry},#{supplierCEO},#{createTime})
+    </insert>
+
+    <update id="updSupplier" parameterType="cn.yyn.bigwork.bean.Supplier">
+        update order_supplier
+        set supplier_name=#{supplierName},supplier_address=#{supplierAddress},
+        supplier_country=#{supplierCountry},supplier_ceo=#{supplierCEO},create_time=#{createTime}
+        where supplier_id=#{supplierId}
+    </update>
+
+    <delete id="delSupplier" parameterType="Integer">
+        delete from order_supplier where supplier_id=#{supplierId}
+    </delete>
+
+</mapper>
