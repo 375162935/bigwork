@@ -20,6 +20,15 @@
     <!-- You can change the theme colors from here -->
     <link href="/css/colors/blue.css" id="theme" rel="stylesheet"
           th:href="@{/css/colors/blue.css}">
+    <style>
+        ul.select-ul {
+            height: 150px;
+            width: 500px;
+            background-color: #26c6da;
+            font-size: 20px;
+            border-radius: .25rem;
+        }
+    </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -71,6 +80,8 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/main.html" th:href="@{/templates/emp/main.html}">首页</a>
                         </li>
+                        <li class="breadcrumb-item"><a href="/order/order_table"
+                                                       th:href="@{/order/order_table(page=1,size=6)}">订单管理</a>
                         <li class="breadcrumb-item active">订单添加</li>
                     </ol>
                 </div>
@@ -94,12 +105,25 @@
                                         <div class="col-sm-12">
                                             <select class="form-control form-control-line" name="commodityId">
                                                 <option th:each="commodity :${commodityList}"
-                                                        th:text="${commodity.commodityName +' - '+ commodity.price}"
-                                                        th:value="${commodity.commodityId}">商品
+                                                        th:text="${commodity.commodityName}"
+                                                        th:value="${commodity.commodityId}"
+                                                        class="commodity_option">商品
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
+                                    <ul class="select-ul">
+                                        <li th:text="商品名称+'：' +${commodityList.get(0).commodityName}">商品名称</li>
+                                        <li th:text="商品单价+'：' +${commodityList.get(0).price}">商品单价</li>
+                                        <li th:text="供应商名称+'：' +${commodityList.get(0).supplier.supplierName}">供应商名称
+                                        </li>
+                                        <li th:text="供应商地址+'：' +${commodityList.get(0).supplier.supplierAddress}">
+                                            供应商地址
+                                        </li>
+                                        <li th:text="供应商所属国家+'：' +${commodityList.get(0).supplier.supplierCountry}">
+                                            供应商所属国家
+                                        </li>
+                                    </ul>
                                     <div class="form-group">
                                         <label class="col-md-12">商品数量</label>
                                         <div class="col-md-12">
@@ -165,8 +189,33 @@
 <!--Custom JavaScript -->
 <script src="/js/custom.min.js" th:src="@{/js/custom.min.js}"></script>
 </body>
+<script th:inline="javascript">
+    var list = [[${commodityList}]];
+    var ul = $(".select-ul");
+    var key = 0;
+    var select = $("select[name=commodityId]");
+    console.log(list)
+    select.change(function () {
+        ul.html("")
+        for (var index = 0; index < list.length; index++) {
+            if (list[index].commodityId == select.val()) {
+                key = index;
+                break;
+            }
+        }
+        var html =
+            "<li>商品名称：" + list[index].commodityName + "</li>" +
+            "<li>商品单价：" + list[index].price + "</li>" +
+            "<li>供应商名称：" + list[index].supplier.supplierName + "</li>" +
+            "<li>供应商地址：" + list[index].supplier.supplierAddress + "</li>" +
+            "<li>供应商所属国家：" + list[index].supplier.supplierCountry + "</li>";
+        ul.html(html)
+    });
+
+</script>
 <script>
     $(function () {
+
         $(".add_btn").on("click", function () {
             var supplierName = $("input[name=supplierName]").val();
             var supplierAddress = $("input[name=supplierAddress]").val();
