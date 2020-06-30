@@ -98,7 +98,7 @@
 
     <insert id="addOrder" parameterType="cn.yyn.bigwork.bean.Order">
         insert into order_table(commodity_id,commodity_number,create_time,create_user_id,update_time,update_user_id)
-        value(#{commodityId},#{commodity_number},#{create_time},#{create_user_id},#{update_time},#{update_user_id})
+        value(#{commodityId},#{commodityNumber},#{createTime},#{createUserId},#{updateTime},#{updateUserId})
     </insert>
 
     <update id="updOrder" parameterType="cn.yyn.bigwork.bean.Order">

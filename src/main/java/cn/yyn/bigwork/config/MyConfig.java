@@ -1,5 +1,6 @@
 package cn.yyn.bigwork.config;
 
+import cn.yyn.bigwork.common.MyInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -14,10 +15,9 @@ public class MyConfig {
             //配置资源拦截目标
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
-//                registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**")
-//                        .excludePathPatterns("/login.html","/","/user/login")
-//                        .excludePathPatterns("/asserts/**")
-//                        .excludePathPatterns("/webjars/**");
+                registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**")
+                        .excludePathPatterns("/login.html","/","/user/login")
+                        .excludePathPatterns("/static/**");
             }
             //配置资源别名路径
             @Override

@@ -48,7 +48,7 @@ public class OrderController {
         List<Commodity> commodityList = commodityService.findAllCommodity();
         System.out.println(commodityList);
         mv.addObject("commodityList", commodityList);
-        mv.setViewName("order_add");
+        mv.setViewName("emp/order/order_add");
         return mv;
     }
 
@@ -81,8 +81,7 @@ public class OrderController {
     public ModelAndView order_upd_pages(Integer orderId) {
         List<Commodity> commodityList = commodityService.findAllCommodity();
         Order order = orderService.findOrderById(orderId);
-        System.out.println(commodityList);
-        System.out.println(order);
+        System.out.println("进入订单修改页面");
         ModelAndView mv = new ModelAndView();
         mv.addObject("commodityList", commodityList);
         mv.addObject("order", order);

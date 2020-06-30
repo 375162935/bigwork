@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
-    <title>订单添加页</title>
+    <title th:name="order" class="title">订单添加页</title>
     <!-- Bootstrap Core CSS -->
     <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"
           th:href="@{/plugins/bootstrap/css/bootstrap.min.css}">
@@ -27,6 +27,8 @@
             background-color: #26c6da;
             font-size: 20px;
             border-radius: .25rem;
+            list-style: none;
+            text-indent: -25px;
         }
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -99,7 +101,7 @@
                         <div class="card-block">
                             <div class="table-responsive">
                                 <form class="form-horizontal form-material addform"
-                                      th:action="@{/order/order_add_pages}">
+                                      th:action="@{/order/order_add}">
                                     <div class="form-group">
                                         <label class="col-sm-12">商品</label>
                                         <div class="col-sm-12">
@@ -133,7 +135,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <input type="submit" class="btn btn-success add_btn" value="添加供应商">
+                                            <input type="button" class="btn btn-success add_btn" value="添加订单">
                                         </div>
                                     </div>
                                 </form>
@@ -217,24 +219,14 @@
     $(function () {
 
         $(".add_btn").on("click", function () {
-            var supplierName = $("input[name=supplierName]").val();
-            var supplierAddress = $("input[name=supplierAddress]").val();
-            var supplierCountry = $("input[name=supplierCountry]").val();
-            var supplierCEO = $("input[name=supplierCEO]").val();
-            if (supplierName == "") {
-                alert("供应商名称不能为空");
+            var commodityId = $("select[name=commodityId]").val();
+            var commodityNumber = $("input[name=commodityNumber]").val();
+            if (commodityId == "") {
+                alert("商品不能为空");
                 return;
             }
-            if (supplierAddress == "") {
-                alert("供应商地址不能为空");
-                return;
-            }
-            if (supplierCountry == "") {
-                alert("供应商国家不能为空");
-                return;
-            }
-            if (supplierCEO == "") {
-                alert("供应商老板不能为空");
+            if (commodityNumber == "") {
+                alert("商品数量不能为空");
                 return;
             } else {
                 $(".addform").submit()
